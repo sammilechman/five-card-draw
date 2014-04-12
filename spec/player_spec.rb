@@ -18,8 +18,22 @@ describe Player do
 		end
 	end
 	
+	describe '#place_bet' do
+		it 'should subtract the bet amount from the purse' do
+			player.purse = 50
+			player.place_bet(5)
+			expect(player.purse).to eq(45)
+		end
+		
+		it 'should automatically fold if player tries to bet more than the purse' do
+			player.purse = 10
+			player.place_bet(15)
+			expect(player.folded).to eq(true)
+		end
+	end
+		
 	describe '#see_bet(current_bet)' do		
-		it 'not allow the player to have negative money, but allow them to see any bet' do
+		it 'should not allow the player to have negative money, but allow them to see any bet' do
 			player.purse = 10
 			player.see_bet(20)
 			expect(player.purse).to eq(0)
