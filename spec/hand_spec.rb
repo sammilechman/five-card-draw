@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe Hand do
 
   subject(:hand) { Hand.new }
@@ -84,6 +85,144 @@ describe Hand do
         Card.new(:ace, :hearts)])
       hand.sort_set!
       expect(hand.straight).to eq(false)
+    end
+
+  end
+  
+  describe '#straightflush' do
+    it "should return [handtype, relavent] if hand is a straightflush" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:king, :hearts),
+        Card.new(:nine, :hearts), Card.new(:jack, :hearts),
+        Card.new(:queen, :hearts)])
+      hand.sort_set!
+      expect(hand.straightflush).to eq([:straightflush, :king])
+    end
+
+    it "should return false if not a straightflush" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:jack, :clubs),
+        Card.new(:queen, :spades), Card.new(:king, :hearts),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.straightflush).to eq(false)
+    end
+
+  end
+  
+  describe '#four_of_a_kind' do
+    it "should return [handtype, relavent] if hand is four of a kind" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:two, :hearts), Card.new(:ten, :diamonds),
+        Card.new(:two, :spades), Card.new(:two, :clubs),
+        Card.new(:two, :diamonds)])
+      hand.sort_set!
+      expect(hand.four_of_a_kind).to eq([:fourofakind, :two])
+    end
+
+    it "should return false if not four of a kind" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:ten, :clubs),
+        Card.new(:ten, :spades), Card.new(:king, :hearts),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.four_of_a_kind).to eq(false)
+    end
+
+  end
+  
+  describe '#full_house' do
+    it "should return [handtype, relavent] if hand is a full house" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:king, :hearts), Card.new(:ten, :diamonds),
+        Card.new(:ten, :spades), Card.new(:king, :clubs),
+        Card.new(:king, :spades)])
+      hand.sort_set!
+      expect(hand.full_house).to eq([:fullhouse, :king])
+    end
+
+    it "should return false if not a full house" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:ten, :clubs),
+        Card.new(:king, :spades), Card.new(:king, :hearts),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.full_house).to eq(false)
+    end
+
+  end
+
+	describe '#three_of_a_kind' do
+    it "should return [handtype, relavent] if hand is a three of a kind" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:seven, :hearts), Card.new(:seven, :diamonds),
+        Card.new(:ten, :spades), Card.new(:queen, :clubs),
+        Card.new(:seven, :hearts)])
+      hand.sort_set!
+      expect(hand.three_of_a_kind).to eq([:threeofakind, :seven])
+    end
+
+    it "should return false if not a three of a kind" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:ten, :clubs),
+        Card.new(:king, :spades), Card.new(:king, :hearts),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.three_of_a_kind).to eq(false)
+    end
+
+  end
+  
+  describe '#two_pair' do
+    it "should return [handtype, relavent] if hand is a two pair" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:king, :hearts), Card.new(:king, :diamonds),
+        Card.new(:six, :spades), Card.new(:six, :clubs),
+        Card.new(:queen, :hearts)])
+      hand.sort_set!
+      expect(hand.two_pair).to eq([:twopair, :king, :six, :queen])
+    end
+
+    it "should return false if not two pair" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:ten, :clubs),
+        Card.new(:jack, :spades), Card.new(:king, :hearts),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.two_pair).to eq(false)
+    end
+
+  end
+  
+  describe '#pair' do
+    it "should return [handtype, relavent] if hand is a pair" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:ten, :diamonds),
+        Card.new(:six, :spades), Card.new(:queen, :clubs),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.pair).to eq([:pair, :ten, :ace, :queen, :six])
+    end
+
+    it "should return false if not a pair" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:two, :clubs),
+        Card.new(:six, :spades), Card.new(:king, :hearts),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.pair).to eq(false)
+    end
+
+  end
+  
+  describe '#high_card' do
+    it "should return [handtype, relavent] if hand is a high card" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:two, :hearts), Card.new(:six, :diamonds),
+        Card.new(:ten, :spades), Card.new(:queen, :clubs),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.high_card).to eq([:highcard, :ace, :queen, :ten, :six, :two])
     end
 
   end
