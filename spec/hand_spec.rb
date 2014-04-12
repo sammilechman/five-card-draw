@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Hand do
 
   subject(:hand) { Hand.new }
-  let(:deck) {Deck.new}
+  let(:deck) { Deck.new }
 
   describe '#draw_initial_hand' do
     it "should draw five cards from the deck to form initial hand" do

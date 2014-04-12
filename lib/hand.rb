@@ -72,7 +72,7 @@ class Hand
   	false
   end
 
-
+	#might be able to refactor into pair, checking pair count
   def two_pair
     face_list = []
   	@set.each { |card| face_list << card.face }
