@@ -229,32 +229,86 @@ describe Hand do
 
   describe '#evaluate_hand' do
 
+    it "should return [handtype, relavent] if hand is a flush" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:eight, :hearts),
+        Card.new(:eight, :hearts), Card.new(:two, :hearts),
+        Card.new(:six, :hearts)])
+        hand.sort_set!
+        expect(hand.evaluate).to eq([:flush, :ten])
+    end
 
-    it "should resolve a high card hand"
-      # hand.instance_variable_set(:@set,
-      #   [Card.new(:ten, :hearts), Card.new(:eight, :clubs),
-      #   Card.new(:four, :hearts), Card.new(:two, :clubs),
-      #   Card.new(:six, :hearts)])
-      # expect(hand.evaluate_hand).to eq([:high_card, :ten])
+    it "should return [handtype, relavent] if hand is a straight" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:eight, :spades),
+        Card.new(:nine, :hearts), Card.new(:jack, :hearts),
+        Card.new(:queen, :hearts)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:straight, :queen])
+    end
 
+    it "should return [handtype, relavent] if hand is a straight flush" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:king, :hearts),
+        Card.new(:nine, :hearts), Card.new(:jack, :hearts),
+        Card.new(:queen, :hearts)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:straightflush, :king])
+    end
 
-    it "should resolve a pair hand"
-      # hand.instance_variable_set(:@set,
-      #   [Card.new(:ten, :hearts), Card.new(:eight, :clubs),
-      #   Card.new(:eight, :hearts), Card.new(:two, :clubs),
-      #   Card.new(:six, :hearts)])
-      # expect(hand.evaluate_hand).to eq([:pair, :eight])
+    it "should return [handtype, relavent] if hand is four of a kind" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:two, :hearts), Card.new(:ten, :diamonds),
+        Card.new(:two, :spades), Card.new(:two, :clubs),
+        Card.new(:two, :diamonds)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:fourofakind, :two])
+    end
 
+    it "should return [handtype, relavent] if hand is a full house" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:king, :hearts), Card.new(:ten, :diamonds),
+        Card.new(:ten, :spades), Card.new(:king, :clubs),
+        Card.new(:king, :spades)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:fullhouse, :king])
+    end
 
+    it "should return [handtype, relavent] if hand is a three of a kind" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:seven, :hearts), Card.new(:seven, :diamonds),
+        Card.new(:ten, :spades), Card.new(:queen, :clubs),
+        Card.new(:seven, :hearts)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:threeofakind, :seven])
+    end
 
-
-
-
-    # let(:set) { [Card.new(:ten, :hearts), Card.new(:eight, :clubs),
-    #   Card.new(:four, :hearts), Card.new(:five, :clubs),
-    #   Card.new(:six, :hearts)] }
-    it "should resolve an unknown hand"
-      #expect(hand.evaluate_hand).to eq([:high_card, :ten])
+    it "should return [handtype, relavent] if hand is a two pair" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:king, :hearts), Card.new(:king, :diamonds),
+        Card.new(:six, :spades), Card.new(:six, :clubs),
+        Card.new(:queen, :hearts)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:twopair, :king, :six, :queen])
+    end
+  
+    it "should return [handtype, relavent] if hand is a pair" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:ten, :hearts), Card.new(:ten, :diamonds),
+        Card.new(:six, :spades), Card.new(:queen, :clubs),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:pair, :ten, :ace, :queen, :six])
+    end
+  
+    it "should return [handtype, relavent] if hand is a high card" do
+      hand.instance_variable_set(:@set,
+        [Card.new(:two, :hearts), Card.new(:six, :diamonds),
+        Card.new(:ten, :spades), Card.new(:queen, :clubs),
+        Card.new(:ace, :hearts)])
+      hand.sort_set!
+      expect(hand.evaluate).to eq([:highcard, :ace, :queen, :ten, :six, :two])
+    end
 
   end
 

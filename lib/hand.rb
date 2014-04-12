@@ -27,8 +27,16 @@ class Hand
   end
   
 
-  def evaluate_hand
-
+  def evaluate
+		return self.straight_flush if straight_flush
+		return self.four_of_a_kind if four_of_a_kind
+		return self.full_house if full_house
+		return self.flush if flush
+		return self.straight if straight
+		return self.three_of_a_kind if three_of_a_kind
+		return self.two_pair if two_pair
+		return self.pair if pair
+		return self.high_card if high_card
   end
   
   
@@ -44,9 +52,15 @@ class Hand
   	@set.each { |card| face_list << card.face }
   	
   	pairs = []
-  	4.times do |idx|
-  		pairs << face_list[idx] if face_list[idx] == face_list[idx + 1]
-  	end
+  	
+  	pairs << face_list[0] if face_list[0] == face_list[1] &&
+  		face_list[0] != face_list[2]
+  	pairs << face_list[1] if face_list[1] == face_list[2] &&
+  		face_list[1] != face_list[0] && face_list[1] != face_list[3]
+  	pairs << face_list[2] if face_list[2] == face_list[3] &&
+  		face_list[2] != face_list[1] && face_list[2] != face_list[4]
+  	pairs << face_list[3] if face_list[3] == face_list[4] &&
+  		face_list[3] != face_list[2]
   	
   	face_list.delete_if { |card_value| pairs.include?(card_value) }
   	
