@@ -89,23 +89,23 @@ describe Hand do
 
   end
   
-  describe '#straightflush' do
-    it "should return [handtype, relavent] if hand is a straightflush" do
+  describe '#straight_flush' do
+    it "should return [handtype, relavent] if hand is a straight flush" do
       hand.instance_variable_set(:@set,
         [Card.new(:ten, :hearts), Card.new(:king, :hearts),
         Card.new(:nine, :hearts), Card.new(:jack, :hearts),
         Card.new(:queen, :hearts)])
       hand.sort_set!
-      expect(hand.straightflush).to eq([:straightflush, :king])
+      expect(hand.straight_flush).to eq([:straightflush, :king])
     end
 
-    it "should return false if not a straightflush" do
+    it "should return false if not a straight flush" do
       hand.instance_variable_set(:@set,
         [Card.new(:ten, :hearts), Card.new(:jack, :clubs),
         Card.new(:queen, :spades), Card.new(:king, :hearts),
         Card.new(:ace, :hearts)])
       hand.sort_set!
-      expect(hand.straightflush).to eq(false)
+      expect(hand.straight_flush).to eq(false)
     end
 
   end
