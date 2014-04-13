@@ -1,10 +1,14 @@
+require_relative "hand"
+
 class Player
 
-	attr_accessor :purse, :hand, :folded
+	attr_accessor :purse, :folded, :hand
+	attr_reader :name
 
-	def initialize(buy_in)
+	def initialize(name, buy_in)
+		@name = name
 		@purse = buy_in
-		@hand = nil
+		@set = nil
 		@folded = false
 	end
 	

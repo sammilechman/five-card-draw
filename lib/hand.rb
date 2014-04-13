@@ -1,3 +1,5 @@
+require_relative "deck"
+
 class Hand
   attr_reader :set
   FACES = [:two, :three, :four, :five, :six, :seven, :eight, :nine,
@@ -6,7 +8,7 @@ class Hand
   def initialize
     @set = []
   end
-  
+
 
   def draw_initial_hand(deck)
     self.get_cards(deck, 5)
@@ -22,10 +24,9 @@ class Hand
 
   def discard(*card_idxs)
     card_idxs.sort.reverse.each do |i|
-      set.delete_at(i)
+      @set.delete_at(i)
     end
   end
-  
 
   def evaluate
 		return self.straight_flush if straight_flush

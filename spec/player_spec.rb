@@ -18,7 +18,7 @@ describe Player do
 		end
 	end
 	
-	describe '#place_bet' do
+	describe '#place_bet(amount)' do
 		it 'should subtract the bet amount from the purse' do
 			player.purse = 50
 			player.place_bet(5)
